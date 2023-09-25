@@ -2,31 +2,10 @@ from academia_funcoes import * # importando as funções que criamos
 import os
 import json # importa os aquivos onde vão ser armazenados as informações
 
-clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/clientes.json"
-avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/avaliacoes.json"
-exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/lista_exercicios.json"
+clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/clientes.json"
+avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/avaliacoes.json"
+exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/lista_exercicios.json"
 
-if not os.path.exists(clientes_json):
-    # Se a pasta não existe, crie-a
-    os.makedirs(clientes_json)
-    print(f"A pasta foi criada com sucesso.")
-else:
-    print(f"A pasta já existe.")
-
-if not os.path.exists(avaliacoes_json):
-    # Se a pasta não existe, crie-a
-    os.makedirs(avaliacoes_json)
-    print(f"A pasta foi criada com sucesso.")
-else:
-    print(f"A pasta já existe.")
-
-if not os.path.exists(exercicios_json):
-    # Se a pasta não existe, crie-a
-    os.makedirs(exercicios_json)
-    print(f"A pasta foi criada com sucesso.")
-else:
-    print(f"A pasta já existe.")
-    
 while True:
     os.system("cls")
     opcao = menu() # mostra o menu de opções

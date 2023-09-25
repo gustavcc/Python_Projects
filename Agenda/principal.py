@@ -4,7 +4,7 @@ import os
 
 while True:
 
-    agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Agenda/agenda.json'
+    agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Agenda/agenda.json'
 
     if not os.path.isfile(agenda_json):
         # Se o arquivo não existe, crie-o
@@ -24,7 +24,8 @@ while True:
             id_contato = 0
         else:
             for id in agenda.keys():
-                id_contato = id
+                id_contato = int(id)
+        id_contato += 1
 
         print(cadastro(agenda, id_contato))
         print("Aperte uma tecla para retornar...")

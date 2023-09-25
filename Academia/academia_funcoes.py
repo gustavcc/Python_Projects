@@ -4,9 +4,9 @@ from time import sleep
 from colorama import Fore
 import re
 
-clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/clientes.json"
-avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/avaliacoes.json"
-exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Academia/lista_exercicios.json"
+clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/clientes.json"
+avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/avaliacoes.json"
+exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/lista_exercicios.json"
 
 # Função menu que da inicio ao nosso programa, mostrando todas as opções disponíveis
 def menu():

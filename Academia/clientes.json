@@ -1,1 +1,16 @@
-{}
+{
+    "1": {
+        "nome": "Gustavo",
+        "idade": 17,
+        "sexo": "M",
+        "telefone": "(00)0000-0000",
+        "status": "ativo"
+    },
+    "2": {
+        "nome": "Uou",
+        "idade": 19,
+        "sexo": "F",
+        "telefone": "(00)0000-0000",
+        "status": "ativo"
+    }
+}

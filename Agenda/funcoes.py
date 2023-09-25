@@ -1,7 +1,13 @@
 import json
 import os
 
-agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos Python/Agenda/agenda.json'
+agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Agenda/agenda.json'
+
+def contem_letras(valor):
+    for caractere in valor:
+        if 'a' <= caractere <= 'z' or 'A' <= caractere <= 'Z':
+            return True
+    return False
 
 def menu():
     print(f"\n{'- '*30}")
@@ -22,6 +28,7 @@ def menu():
             print("\nNão é válido 'Enter' como entrada")
 
 def cadastro(agenda, id_contato):
+    os.system('cls')
     while True:
         print(f"\n{'- '*30}")
         print(f'{"-"*60}\n{" CADASTRO ":^60}\n{"-"*60}')
@@ -32,18 +39,56 @@ def cadastro(agenda, id_contato):
         if opcao:
             if opcao=='1':
                 while True:
-                    nome = input("Insira o nome da contato: ")
-                endereco = input(f"Insira o endereço de {nome}: ")
-                quant_tel = int(input(f"Deseja inserir quantos telefones para {nome}? ")) 
-                lista_telefone = []  
-                for i in range (quant_tel):  
-                    telefone = input(f"Insira o {i+1}º telefone de {nome}: ")
+                    nome = input("\nInsira o nome\n→ ").capitalize().strip()
+                    if nome:
+                        especial = ['1','2','3','4','5','6','7','8','9','0','!','@','#','$','%','&',',','.',';']
+                        diferente = False
+                        for letra in nome:
+                            if letra in especial:
+                                diferente = True
+                                break
+                        if diferente:
+                            print("\nO nome não pode conter números e caracteres especiais!\n")
+                        else:
+                            break
+                    else:
+                        continue
+                
+                while True:
+                    endereco = input(f"\nInsira o endereço de {nome}\n→ ").capitalize().strip()
+                    if endereco:
+                        especial = ['!','@','#','$','%','&',',','.',';']
+                        diferente = False
+                        for letra in nome:
+                            if letra in especial:
+                                diferente = True
+                                break
+                        if diferente:
+                            print("\nO endereço não pode conter caracteres especiais!\n")
+                        else:
+                            break
+                    else:
+                        continue
+                resp = 's'
+                lista_telefone = []
+                while resp[0] in 'sS':
+                    telefone = input(f"\nInsira o telefone de {nome}\nex: (00)0000-0000\n→ ").strip()
+                    if telefone:
+                        if telefone[0]!='(' or telefone[3]!=')' or telefone[8]!='-' or len(telefone)!=13 or contem_letras(telefone):
+                            print("\nFormato incorreto, deve conter 10 números no formato sugerido\nTente novamente!")
+                    else:
+                        continue
                     lista_telefone.append(telefone)
-                    agenda[nome] = [endereco, lista_telefone]
-            if opcao=='0':
+                    resp = input("\nDeseja adicionar outro telefone? (sim/não)\n→ ")
+                agenda[id_contato] = {'nome': nome, 'endereço': endereco, 'telefone': lista_telefone}
+                with open(agenda_json,'w', encoding='utf8') as arquivo:
+                    json.dump(agenda,arquivo,indent=4)
+                print("\nContatp cadastrado com sucesso!\n")
+                break
+            elif opcao=='0':
                 break
             else:
-                continue
+                print('\nEscolha o valor numérico (1 ou 0)!\n')
         else:
             print("\nNão é válido 'Enter' como entrada\n")
     print(f'{"-"*60}\n{"- "*30}')

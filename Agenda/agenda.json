@@ -1,1 +1,16 @@
-{}
+{
+    "1": {
+        "nome": "Gustavo",
+        "endere\u00e7o": "Projeto formoso",
+        "telefone": [
+            "(00)0000-0000"
+        ]
+    },
+    "2": {
+        "nome": "Stefanny",
+        "endere\u00e7o": "Vila 33",
+        "telefone": [
+            "(99)9999-9999"
+        ]
+    }
+}
