@@ -19,13 +19,14 @@ while True:
     opcao = menu()
     os.system("cls")
     if opcao == '1':
-        id_contato = 0
-        if not agenda.keys(): # definir o valor do id
-            id_contato = 0
-        else:
-            for id in agenda.keys():
-                id_contato = int(id)
-        id_contato += 1
+        id_contato = str(1+int(list(agenda.keys())[-1])) if len(agenda) != 0 else '1'
+        # id_contato = 0
+        # if not agenda.keys(): # definir o valor do id
+        #     id_contato = 0
+        # else:
+        #     for id in agenda.keys():
+        #         id_contato = int(id)
+        # id_contato += 1
 
         print(cadastro(agenda, id_contato))
         print("Aperte uma tecla para retornar...")
