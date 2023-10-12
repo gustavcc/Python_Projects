@@ -28,33 +28,33 @@ while True:
         #         id_contato = int(id)
         # id_contato += 1
 
-        print(cadastro(agenda, id_contato))
+        print(cadastro(agenda, id_contato, agenda_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '2':
-        print(editar(agenda))
+        print(editar(agenda,agenda_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '3':
-        print(excluir(agenda))
+        print(excluir(agenda,agenda_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '4':
-        print(pesquisar(agenda))
+        print(pesquisar(agenda,agenda_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '5':
-        print(ordem_adcionado(agenda))
+        print(ordem_adcionado(agenda,agenda_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '6':
         print("\n---ORDEM ALFABÉTICA---")
-        for key in (ordem_abc(agenda)):
+        for key in (ordem_abc(agenda,agenda_json)):
             print(key)
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '0':
-        print("Fim do programa\n")
+        print("\n\nFim do programa!\n\n")
         break
     else:
         print("\nResponda de acordo com as opções: 1 ao 6, ou 0\n")
