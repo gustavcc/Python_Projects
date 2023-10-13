@@ -1,10 +1,11 @@
 import os
 from colorama import Fore, Back, Style
 
-
+vit_X = 0
+vit_O = 0
 jogarNovamente="s"
 jogadas=0
-quemJoga=2 #1=cpu - 2=jogador
+quemJoga=1 #1=jogador 1 - 2=jogador 2
 maxJogadas=9
 vit='n'
 velha=[
@@ -25,103 +26,125 @@ def tela():
     print("   ---|---|---")
     print("2:  "+velha[2][0]+" | "+velha[2][1]+" | "+velha[2][2])
     print("\n-----------------")
-    print(Fore.BLUE+f"Jogadas -> {jogadas}"+Fore.RESET)
-    print("-----------------")
+    print(Fore.BLUE+f"Jogadas → {jogadas}"+Fore.RESET)
+    print(f"Jogador 1 → {Fore.RESET}{Fore.RED}{vit_X}{Fore.RESET}")
+    print(f"Jogador 2 → {Fore.RESET}{Fore.GREEN}{vit_O}{Fore.RESET}")
+    print("-"*60)
 
 def jogador_1Joga():
     global jogadas
     global quemJoga
     global maxJogadas 
-    if quemJoga==2 and jogadas<maxJogadas:
+    if quemJoga==1 and jogadas<maxJogadas:
         print("1° JOGADOR\n")
-        linha=int(input("Linha\n:"))
-        coluna=int(input("Coluna\n:"))
-        try: #try é para que o Python tente executar 
-        # aquele código e caso não consiga executar por conta de 
-        # um erro ele vai retornar o que temos dentro do except.
+        while True:
+            try:
+                linha=int(input("Linha\n:"))
+                break
+            except ValueError:
+                continue
+        while True:
+            try:
+                coluna=int(input("Coluna\n:"))
+                break
+            except ValueError:
+                continue
+        if velha[linha][coluna]==" ":
             while velha[linha][coluna]!=" ":
                 linha=int(input("Linha\n:"))
                 coluna=int(input("Coluna\n:"))
             velha[linha][coluna]=(f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}")
-            quemJoga=1
+            quemJoga=2
             jogadas+=1
-            print("-----------------")
-        except:
-            print("\n-----------------")
-            print(Fore.RED+"Error "+Fore.RESET+"-> linha e/ou coluna inválido")
-            print("\n-----------------")
+            print("-"*60)
+        else:
+            print("-"*60)
+            print(Fore.RED+"Error "+Fore.RESET+"-> posição inválida ou preenchida")
+            print("-"*60)
+            print("Aperte uma tecla para continuar...")
+            input()
 
 def jogador_2Joga():
     global jogadas
     global quemJoga
     global maxJogadas 
-    if quemJoga==1 and jogadas<maxJogadas:
+    if quemJoga==2 and jogadas<maxJogadas:
         print('2° JOGADOR\n')
-        linha=int(input("Linha\n:"))
-        coluna=int(input("Coluna\n:"))
-        try: #try é para que o Python tente executar 
-        # aquele código e caso não consiga executar por conta de 
-        # um erro ele vai retornar o que temos dentro do except.
+        while True:
+            try:
+                linha=int(input("Linha\n:"))
+                break
+            except ValueError:
+                continue
+        while True:
+            try:
+                coluna=int(input("Coluna\n:"))
+                break
+            except ValueError:
+                continue
+        if velha[linha][coluna]==" ":
             while velha[linha][coluna]!=" ":
                 linha=int(input("Linha\n:"))
                 coluna=int(input("Coluna\n:"))
-            velha[linha][coluna]=(f"{Fore.GREEN}{'O'}{Fore.RESET}")
-            quemJoga=2
+            velha[linha][coluna]=(f"{Fore.RESET}{Fore.GREEN}{'O'}{Fore.RESET}")
+            quemJoga=1
             jogadas+=1
-            print("-----------------")
-        except:
-            print("\n-----------------")
-            print(Fore.RED+"Error "+Fore.RESET+"-> linha e/ou coluna inválido")
-            print("\n-----------------")
+            print("-"*60)
+        else:
+            print("-"*60)
+            print(Fore.RED+"Error "+Fore.RESET+"-> posição inválida ou preenchida")
+            print("-"*60)
+            print("Aperte uma tecla para continuar...")
+            input()
 
 def verificarVitoria():
     global velha
     global vitoria
     vitoria='n'
+
     # Verificar linhas
     linha=0
     while linha<3:
         if velha[linha][0]==velha[linha][1]==velha[linha][2]==(f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}"):
             vitoria='X'
             break
-        elif velha[linha][0]==velha[linha][1]==velha[linha][2]==(f"{Fore.GREEN}{'O'}{Fore.RESET}"):
+        elif velha[linha][0]==velha[linha][1]==velha[linha][2]==(f"{Fore.RESET}{Fore.GREEN}{'O'}{Fore.RESET}"):
             vitoria='O'
             break
         linha+=1
+
     # Verificar colunas
     coluna=0
     while coluna<3:
         if velha[0][coluna]==velha[1][coluna]==velha[2][coluna]==(f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}"):
             vitoria='X'
             break
-        elif velha[0][coluna]==velha[1][coluna]==velha[2][coluna]==(f"{Fore.GREEN}{'O'}{Fore.RESET}"):
+        elif velha[0][coluna]==velha[1][coluna]==velha[2][coluna]==(f"{Fore.RESET}{Fore.GREEN}{'O'}{Fore.RESET}"):
             vitoria='O'
             break
         coluna+=1
+
     # Verificar 1° diagonal
-    diagonal=0
-    while diagonal<1:
+    diagonal_1=0
+    while diagonal_1<1:
         if velha[0][0]==velha[1][1]==velha[2][2]==(f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}"):
             vitoria='X'
             break
-        elif velha[0][0]==velha[1][1]==velha[2][2]==(f"{Fore.GREEN}{'O'}{Fore.RESET}"):
+        elif velha[0][0]==velha[1][1]==velha[2][2]==(f"{Fore.RESET}{Fore.GREEN}{'O'}{Fore.RESET}"):
             vitoria='O'
             break
-        diagonal+=1
+        diagonal_1+=1
+
     # Verificar 2° diagonal
-    simbolo=[f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}",f"{Fore.GREEN}{'O'}{Fore.RESET}"]
-    diagonal_l=0
-    diagonal_c=2
-    qtd=0
-    for i in simbolo:
-        while diagonal_c>=0:
-            if velha[diagonal_l][diagonal_c]==i:
-                qtd+=1
-            diagonal_l+=1
-            diagonal_c-=1
-        if qtd==3:
-            vitoria=(Fore.RESET+i+Fore.RESET)
+    diagonal_2 = 0
+    while diagonal_2<1:
+        if velha[2][0]==velha[1][1]==velha[0][2]==(f"{Fore.RESET}{Fore.RED}{'X'}{Fore.RESET}"):
+            vitoria='X'
             break
+        elif velha[2][0]==velha[1][1]==velha[0][2]==(f"{Fore.RESET}{Fore.GREEN}{'O'}{Fore.RESET}"):
+            vitoria='O'
+            break
+        diagonal_2+=1
     return vitoria
 
 def redefinir():
@@ -131,7 +154,7 @@ def redefinir():
     global maxJogadas
     global vit
     jogadas=0
-    quemJoga=2 #1=cpu - 2=jogador
+    quemJoga=1 #1=jogador 1 - 2=jogador 2
     maxJogadas=9
     vit='n'
     velha=[
@@ -140,7 +163,7 @@ def redefinir():
         [" "," "," "]
     ]
 
-while jogarNovamente=='s':                
+while jogarNovamente[0]=='s':                
     while True:
         tela()
         jogador_1Joga()
@@ -148,22 +171,29 @@ while jogarNovamente=='s':
         tela()
         if vit!='n' or jogadas==maxJogadas:
             print(Fore.YELLOW+'FIM DE JOGO!'+Fore.RESET)
-            print("-----------------")
+            print("-"*60)
             break
         jogador_2Joga()
         tela()
         vit=verificarVitoria()
         if vit!='n' or jogadas==maxJogadas:
             print(Fore.YELLOW+'FIM DE JOGO!'+Fore.RESET)
-            print("-----------------")
+            print("-"*60)
             break
-    if vit=='X' or vit=='O':
-        print('O jogador',vit,'venceu!')
-        print("-----------------")
+    if vit=='X':
+        vit_X += 1
+        print(f'O jogador 1 ({Fore.RESET}{Fore.RED}{vit}{Fore.RESET}) venceu!')
+        print("-"*60)
+    elif vit=='O':
+        vit_O += 1
+        print(f'O jogador 2 ({Fore.RESET}{Fore.GREEN}{vit}{Fore.RESET}) venceu!')
+        print("-"*60)
     else:
         print("Empate!")
-        print("-----------------")
-    jogarNovamente=input("\nJogar novamente? (s/n)\n:").lower()
+        print("-"*60)
+    jogarNovamente=input("\nJogar novamente? (s/n)\n:").lower().strip()
     redefinir()
     if jogarNovamente[0]=='n':
+        os.system('cls')
+        print('\n\nFim do Jogo!\n\n')
         break
