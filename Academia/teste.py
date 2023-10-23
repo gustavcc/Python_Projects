@@ -1,33 +1,15 @@
-avaliacoes ={
-    "1": {
-        "altura": 70.0,
-        "peso": 65.0,
-        "gordura": 30.0,
-        "bra\u00e7o": 20.0,
-        "perna": 30.0,
-        "cintura": 20.0,
-        "data": "07/07/2023",
-        "cliente": "1"
-    }
-}
+import re #biblioteca regex
 
-clientes={
-    "1": {
-        "nome": "Gustavo",
-        "idade": 17,
-        "sexo": "M",
-        "telefone": "(00)0000-0000",
-        "status": "ativo"
-    },
-    "2": {
-        "nome": "Rita",
-        "idade": 45,
-        "sexo": "F",
-        "telefone": "(00)0000-0000",
-        "status": "ativa"
-    }
-}
-
-for key, value in avaliacoes.items():
-    cliente = value['cliente']
-    print(f"ID: {key} - CLIENTE: {cliente} - NOME: {clientes[cliente]['nome']}\n")
+while True:
+    dia = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+    dia_semana = input(f"\nInsira o dia da semana (Segunda - Sábado)\nEx: Terça\n:").capitalize().strip()
+    semana_separado=re.split("[ -]", dia_semana)
+    print(semana_separado)
+    correct = False
+    if (semana_separado[0] in dia) or ((semana_separado[0] in dia) and (semana_separado[1] == 'feira')):
+        correct = True
+    if correct:
+        print(correct)
+        break
+    else:
+        print("incorreto")

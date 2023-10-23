@@ -10,6 +10,7 @@ while True:
         # Se o arquivo não existe, crie-o
         with open(agenda_json, 'w') as arquivo:
             arquivo.write('{}')
+            
     with open(agenda_json,"r",encoding="utf8") as arquivo:
         agenda = {}
         arquivo_json = json.load(arquivo)

@@ -4,10 +4,6 @@ from time import sleep
 from colorama import Fore
 import re
 
-clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/clientes.json"
-avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/avaliacoes.json"
-exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/lista_exercicios.json"
-
 # Função menu que da inicio ao nosso programa, mostrando todas as opções disponíveis
 def menu():
     print(f"\n{'- '*31}")
@@ -19,7 +15,7 @@ def menu():
 4 - Pesquisar 
 5 - Listar 
 6 - Relatório 
-0 - Sair\n""")
+0 - Encerrar\n""")
     opcao = int(input("Insira a opção que dejesa\n:"))
     return opcao
 
@@ -30,7 +26,7 @@ def contem_letras(string):
                     return False
 
 # Função cadastrar com parametros que são dicionários, com o contador que será a chave de cada um
-def cadastrar(clientes, avaliacoes, lista_exercicios, id_cliente, id_avaliacao, id_lista_exercicio): # parametros que são dicionários, com o contador que será a chave de cada
+def cadastrar(clientes, avaliacoes, lista_exercicios, id_cliente, id_avaliacao, id_lista_exercicio, clientes_json, avaliacoes_json, exercicios_json): # parametros que são dicionários, com o contador que será a chave de cada
     os.system("cls")
     while True:
         print(f"\n{'- '*30}")
@@ -182,7 +178,7 @@ Tente novamente!\n""")
                         print(Fore.GREEN+f"\nCliente {clientes[id_cli_exe].get('status')}!\n"+Fore.RESET)
                         while True:
                             dia=['Segunda','Terça','Quarta',"Quinta","Sexta","Sábado"]
-                            dia_semana=input(f"Dia da semana do exercício de {clientes[id_cli_exe]['nome']}\n:").capitalize()
+                            dia_semana=input(f"Dia da semana do exercício de {clientes[id_cli_exe]['nome']}\n:").capitalize().strip()
                             semana_separado=re.split("\s|-", dia_semana)
                             resp=False
                             if (semana_separado[0] in dia) or (semana_separado[0] in dia and semana_separado[1]=='feira'):
@@ -255,7 +251,7 @@ Tente novamente!\n""")
     return ""  
 
 # Função editar com parametros que são dicionários, aqui você pode editar qualquer informação de cliente, avaliaçaõ ou lista de exercicios
-def editar(clientes,avaliacoes,lista_exercicios):
+def editar(clientes,avaliacoes,lista_exercicios, clientes_json, avaliacoes_json, exercicios_json):
     os.system("cls")
     print(f"\n{'- '*30}")
     while True:
@@ -587,7 +583,7 @@ Tente novamente!\n""")
     return ""
 
 # Função excluir com parametros que são dicionários, aqui você exlui clientes, avaliações ou lista de exercicios
-def excluir(clientes,avaliacoes,lista_exercicios):
+def excluir(clientes,avaliacoes,lista_exercicios, clientes_json, avaliacoes_json, exercicios_json):
     os.system("cls")
     print(f"\n{'- '*30}")
     while True:
@@ -703,7 +699,7 @@ def excluir(clientes,avaliacoes,lista_exercicios):
     return ""
 
 # Função pesquisar com parametros que são dicionários e da para pesquisar pelos clientes, avaliações e lista de exercicios
-def pesquisar(clientes,avaliacoes,lista_exercicios):
+def pesquisar(clientes,avaliacoes,lista_exercicios, clientes_json, avaliacoes_json, exercicios_json):
     os.system("cls")
     print(f"\n{'- '*30}")
     while True:
@@ -730,7 +726,7 @@ def pesquisar(clientes,avaliacoes,lista_exercicios):
                             print(f"ID: {key} - NOME: {value['nome']}\n")
                         while True:
                             cont = 0
-                            nome = input("\nInsira o nome do cliente\n:")
+                            nome = input("\nInsira o nome do cliente\n:").capitalize().strip()
                             nome_clientes = []
                             for key, value in clientes.items():
                                 nome_clientes.append(value['nome'])
@@ -818,7 +814,7 @@ def pesquisar(clientes,avaliacoes,lista_exercicios):
                         break
                     elif resp == '3':
                         while True:
-                            nome = input("\nInsira o nome do cliente\n:")
+                            nome = input("\nInsira o nome do cliente\n:").capitalize().strip()
                             cliente_id = None
                             for id_cliente, info_cliente in clientes.items(): # echa o ID do cliente com base no nome
                                 if info_cliente['nome'] == nome:
@@ -867,42 +863,54 @@ def pesquisar(clientes,avaliacoes,lista_exercicios):
                         print("\nOpção inválida!\n")               
             break
         elif opcao == '3' or opcao == 'l'.lower():
-            print(f'\n{"-"*60}\n{" PESQUISA DE LISTA DE EXERCICIOS ":^60}\n{"-"*60}\n')
             if not lista_exercicios:
                 print(f'\n{"-"*60}')
                 print(Fore.RED+"Não há lista de exercicíos!"+Fore.RESET)
                 print(f'{"-"*60}\n')
                 break
             else:
-                for key,value in clientes.items(): # cliente disponíveis
-                    print(f"ID: {key} - NOME: {value['nome']}\n")
-            while True:
-                        nome = input("\nInsira o nome do cliente\n:")
-                        cliente_id = None
-                        for id_cliente, info_cliente in clientes.items(): # echa o ID do cliente com base no nome
-                            if info_cliente['nome'] == nome:
-                                cliente_id = id_cliente
-                                break
-                        cliente_possui_exercicio = False # verifica se o cliente possui uma lista de exercicios
-                        for lista in lista_exercicios.values(): 
-                            if lista['cliente'] == cliente_id:
-                                cliente_possui_exercicio = True
-                                break
-                        dia_semana = input(f"\nInsira o dia da semana de {nome} (Segunda - Sábado)\n:")
-                        if cliente_possui_exercicio: # se possui lista de exercicios, ele mostra a lista de exercicio do cliente
-                            os.system("cls")
-                            for key_lista, value_lista in lista_exercicios.items():
-                                if value_lista['dia'] == dia_semana:
-                                    for key_cliente, value_cliente in clientes.items():
-                                        if nome == value_cliente['nome']:
-                                            print("-"*60) # deixar bunito 
-                                            print(f'\n{f"{nome} - {dia_semana}":^60}\n')
-                                            print(f'\nID -> {key_lista}\nEXERCICIO -> {value_lista["exercicio"]}\nMUSCULO -> {value_lista["grupo"]}\nSÉRIES -> {value_lista["series"]}',
-                                            f'\nREPETIÇÕES -> {value_lista["repetições"]}\nCLIENTE -> {value_lista["cliente"]}')
+                while True:
+                    os.system('cls')
+                    print(f'\n{"-"*60}\n{" PESQUISA DE LISTA DE EXERCICIOS ":^60}\n{"-"*60}\n')
+                    for key,value in clientes.items(): # cliente disponíveis
+                        print(f"ID: {key} - NOME: {value['nome']}\n")
+                    nome = input("\nInsira o nome do cliente\n:").capitalize().strip()
+                    cliente_id = None
+                    for id_cliente, info_cliente in clientes.items(): # echa o ID do cliente com base no nome
+                        if info_cliente['nome'] == nome:
+                            cliente_id = id_cliente
+                            break
+                    cliente_possui_exercicio = False # verifica se o cliente possui uma lista de exercicios
+                    for lista in lista_exercicios.values(): 
+                        if lista['cliente'] == cliente_id:
+                            cliente_possui_exercicio = True
+                            break
+                    while True:
+                        dia = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
+                        dia_semana = input(f"\nDia da semana (Segunda - Sábado)\nEx: Terça\n:").capitalize().strip()
+                        semana_separado=re.split("[ -]", dia_semana)
+                        correct_dia = False
+                        if (semana_separado[0] in dia) or ((semana_separado[0] in dia) and (semana_separado[1] == 'feira')):
+                            correct_dia = True
+                        if correct_dia:
                             break
                         else:
-                            print(f"\nO cliente {nome} não possui uma lista de exercicios ou data incorreta.")
-                            print("-"*60) # deixar bunito 
+                            print("\nInsira um dia válido\n")
+                    if cliente_possui_exercicio and correct_dia: # se possui lista de exercicios, ele mostra a lista de exercicio do cliente
+                        os.system("cls")
+                        for key_lista, value_lista in lista_exercicios.items():
+                            if value_lista['dia'] == dia_semana:
+                                for key_cliente, value_cliente in clientes.items():
+                                    if nome == value_cliente['nome']:
+                                        print("-"*60) # deixar bunito 
+                                        print(f'\n{f"{nome} - {dia_semana}":^60}\n')
+                                        print(f'\nID -> {key_lista}\nEXERCICIO -> {value_lista["exercicio"]}\nMUSCULO -> {value_lista["grupo"]}\nSÉRIES -> {value_lista["series"]}',
+                                        f'\nREPETIÇÕES -> {value_lista["repetições"]}\nCLIENTE -> {value_lista["cliente"]}')
+                        break
+                    else:
+                        print(f"\nO cliente {nome} não existe ou não possui uma lista de exercicios nessa data!!")
+                        print("-"*60) # deixar bunito    
+                        sleep(3)           
             break
         elif opcao=="0":
             break
@@ -912,7 +920,7 @@ def pesquisar(clientes,avaliacoes,lista_exercicios):
     return ""
 
 # Função listar com parametros que são dicionários, onde você pode listar algumas informações
-def listar(clientes,avaliacoes,lista_exercicios):
+def listar(clientes,avaliacoes,lista_exercicios, clientes_json, avaliacoes_json, exercicios_json):
     os.system("cls")
     print(f"\n{'- '*30}")
     print(f'{"-"*60}\n{" LISTAR ":^60}\n{"-"*60}') 
@@ -1013,7 +1021,7 @@ def listar(clientes,avaliacoes,lista_exercicios):
     print(f"\n{'- '*30}")
 
 # Função relatorio com parametros que são dicionários, mostrar o relatório de algumas informações
-def relatorio(clientes,avaliacoes,lista_exercicios):
+def relatorio(clientes,avaliacoes,lista_exercicios, clientes_json, avaliacoes_json, exercicios_json):
     os.system("cls")
     print(f"\n{'- '*30}")
     print(f'{"-"*60}\n{" RELATÓRIO ":^60}\n{"-"*60}')

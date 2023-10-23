@@ -2,73 +2,72 @@ from academia_funcoes import * # importando as funções que criamos
 import os
 import json # importa os aquivos onde vão ser armazenados as informações
 
-clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/clientes.json"
-avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/avaliacoes.json"
-exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/lista_exercicios.json"
-
 while True:
-    os.system("cls")
-    opcao = menu() # mostra o menu de opções
+
+    clientes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/clientes.json"
+    avaliacoes_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/avaliacoes.json"
+    exercicios_json = "C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Academia/lista_exercicios.json"
+
+
+    if not os.path.isfile(clientes_json):
+        with open(clientes_json, 'w') as arquivo1:
+            arquivo1.write('{}')
     with open(clientes_json,"r",encoding="utf8") as arquivo:
-        clientes = {} # criando o dicionário clientes a partir das informações armazernadas em clientes.json,
-        # assim salva as informações e pode utilizalas mesmo se fechar o programa e sem ficar abrindo o arquivo
+        clientes = {}
         cliente = json.load(arquivo)
         clientes = cliente
+
+    if not os.path.isfile(avaliacoes_json):
+        with open(avaliacoes_json, 'w') as arquivo2:
+            arquivo2.write('{}')
     with open(avaliacoes_json,"r",encoding="utf8") as arquivo:
-        avaliacoes = {}# criando o dicionário avaliacoes a partir das informações armazernadas em avaliacoes.json,
-        # assim salva as informações e pode utilizalas mesmo se fechar o programa e sem ficar abrindo o arquivo
+        avaliacoes = {}
         avaliacao = json.load(arquivo)
         avaliacoes = avaliacao
+
+    if not os.path.isfile(exercicios_json):
+        with open(exercicios_json, 'w') as arquivo3:
+            arquivo3.write('{}')
     with open(exercicios_json,"r",encoding="utf8") as arquivo:
-        lista_exercicios = {}# criando o dicionário lista_exercicios a partir das informações armazernadas em lista_exercicios.json,
-        # assim salva as informações e pode utilizalas mesmo se fechar o programa e sem ficar abrindo o arquivo
+        lista_exercicios = {}
         lista = json.load(arquivo)
         lista_exercicios = lista
 
+    os.system("cls")
+    opcao = menu() # mostra o menu de opções
+
     if opcao == 1: # função dadastrar é usada
-        id_cliente, id_avaliacao, id_lista_exercicio = 0,0,0,
-        if not clientes.keys(): # definir o valor do id_cliente
-            id_cliente = 0
-        else:
-            for contador1 in cliente.keys():
-                id_cliente = int(contador1)
-        if not avaliacoes.keys(): # definir o valor do id_avaliacao
-            id_avaliacao = 0
-        else:
-            for contador2 in avaliacoes.keys():
-                id_avaliacao = int(contador2)
-        if not lista_exercicios.keys():
-            id_lista_exercicio = 0
-        else:
-            for contador3 in lista_exercicios.keys():
-                id_lista_exercicio = int(contador3)
-        id_cliente += 1  
-        id_avaliacao += 1 
-        id_lista_exercicio += 1
-        print(cadastrar(clientes, avaliacoes, lista_exercicios, id_cliente, id_avaliacao, id_lista_exercicio))
+
+        id_cliente = str(1+int(list(clientes.keys())[-1])) if len(clientes) != 0 else '1'
+        id_avaliacao = str(1+int(list(avaliacoes.keys())[-1])) if len(avaliacoes) != 0 else '1'
+        id_lista_exercicio = str(1+int(list(lista_exercicios.keys())[-1])) if len(lista_exercicios) != 0 else '1'
+
+
+        print(cadastrar(clientes, avaliacoes, lista_exercicios, id_cliente, id_avaliacao, id_lista_exercicio, clientes_json, avaliacoes_json, exercicios_json))
         print("\nAperte uma tecla para retornar...")
         input()
     elif opcao == 2: # função editar é usada
-        print(editar(clientes, avaliacoes, lista_exercicios))
+        print(editar(clientes, avaliacoes, lista_exercicios, clientes_json, avaliacoes_json, exercicios_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == 3: # função excluir é usada
-        print(excluir(clientes, avaliacoes, lista_exercicios))
+        print(excluir(clientes, avaliacoes, lista_exercicios, clientes_json, avaliacoes_json, exercicios_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == 4: # função pesquisar é usada
-        print(pesquisar(clientes, avaliacoes, lista_exercicios))
+        print(pesquisar(clientes, avaliacoes, lista_exercicios, clientes_json, avaliacoes_json, exercicios_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == 5: # função listar é usada
-        print(listar(clientes, avaliacoes, lista_exercicios))
+        print(listar(clientes, avaliacoes, lista_exercicios, clientes_json, avaliacoes_json, exercicios_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == 6: # função relatório é usada
-        print(relatorio(clientes, avaliacoes, lista_exercicios))
+        print(relatorio(clientes, avaliacoes, lista_exercicios, clientes_json, avaliacoes_json, exercicios_json))
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == 0: # opção que encerra o programa
+        os.system('cls')
         print(f"\n{'- '*30}")
         print("-"*60) # deixar bunito
         print("\nFim do programa -> sentiremos sua falta :(\n")
