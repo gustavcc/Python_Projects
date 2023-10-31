@@ -1,24 +1,16 @@
 {
     "1": {
         "nome": "Gustavo",
-        "endere\u00e7o": "Lapa",
+        "endere\u00e7o": "Bjl",
         "telefone": [
             "(00)0000-0000"
         ]
     },
     "2": {
-        "nome": "Stefanny",
-        "endere\u00e7o": "Projeto",
-        "telefone": [
-            "(00)0000-0000",
-            "(11)1111-1111"
-        ]
-    },
-    "3": {
         "nome": "Rita",
-        "endere\u00e7o": "Projeto",
+        "endere\u00e7o": "Bjl",
         "telefone": [
-            "(88)9999-8888"
+            "(11)1111-1211"
         ]
     }
 }

@@ -74,14 +74,15 @@ def cadastro(agenda, id_contato, agenda_json):
                 resp = 's'
                 lista_telefone = []
                 while resp[0] in 'sS':
-                    telefone = input(f"\nInsira o telefone de {nome}\nex: (00)0000-0000\n→ ").strip()
-                    if telefone:
-                        if telefone[0]!='(' or telefone[3]!=')' or telefone[8]!='-' or len(telefone)!=13 or contem_letras(telefone):
-                            print("\nFormato incorreto, deve conter 10 números no formato sugerido\nTente novamente!")
+                    while True:
+                        telefone = input(f"\nInsira o telefone de {nome}\nex: (00)0000-0000\n→ ").strip()
+                        if telefone:
+                            if telefone[0]!='(' or telefone[3]!=')' or telefone[8]!='-' or len(telefone)!=13 or contem_letras(telefone):
+                                print("\nFormato incorreto, deve conter 10 números no formato sugerido\nTente novamente!")
+                            else:
+                                break
                         else:
-                            break
-                    else:
-                        print("\nNão é válido valor vazio\n")
+                            print("\nNão é válido valor vazio\n")
                     lista_telefone.append(telefone)
                     resp = input("\nDeseja adicionar outro telefone? (sim/não)\n→ ")
                 agenda[id_contato] = {'nome': nome, 'endereço': endereco, 'telefone': lista_telefone}
@@ -111,15 +112,16 @@ def editar(agenda, agenda_json):
                 if not agenda:
                     os.system('cls')
                     print(f'\n{"-"*60}')
-                    print(Fore.RED+"Não há clientes!"+Fore.RESET)
+                    print(Fore.RED+"Não há contatos!"+Fore.RESET)
                     print(f'{"-"*60}\n')
                     break
                 else:
                     while True:
+                        os.system('cls')
                         print(f'\n{"-"*60}\n{"CONTATOS":^60}\n{"-"*60}') # ! contatos disponíveis
                         for id,contato in agenda.items():
-                            print(f"ID: {id} → NOME: {contato['nome']}")
-                        id = input("\nInsira o ID do contato que desejar\n→ ")
+                            print(f"ID: {id} → {contato['nome']}")
+                        id = input("\nInsira o ID do contato que desejar\n→ ").strip()
                         if id:
                             if id in agenda.keys():
                                 while True:
@@ -127,8 +129,7 @@ def editar(agenda, agenda_json):
 1 - Nome
 2 - Endereço
 3 - Telefone
-0 - Sair
-""")
+0 - Sair""")
                                     opcao_editar = input(f'\nInsira o que deseja editar de {agenda[id]["nome"]}\n→ ').lower().strip()
                                     if opcao_editar:
                                         if opcao_editar == '1' or opcao_editar[0] == 'n':
@@ -231,8 +232,10 @@ def editar(agenda, agenda_json):
                                 break
                             else:
                                 print("\nEsse contato não existe\n")
+                                sleep(3)
                         else:
                             print("\nNão é válido valor vazio\n")
+                            sleep(3)
             if opcao == '0':
                 break
             else:
@@ -242,15 +245,82 @@ def editar(agenda, agenda_json):
     print(f'{"-"*60}\n{"- "*30}')
     return ""
 
-def excluir(agenda):
-    print("\n---CONTATOS---")
-    for cont in agenda.keys():
-        print(cont)
-    contato = input("Insira o contato que deseja excluir: ")
-    agenda.pop(contato)
-    return agenda
+def excluir(agenda,agenda_json):
+    while True:
+        os.system('cls')
+        print(f"\n{'- '*30}")
+        print(f'{"-"*60}\n{" EDITAR ":^60}\n{"-"*60}')
+        print('''
+1 - Continuar para excluir.
+0 - Sair (ou qualquer tecla).''')
+        opcao = input("\n→ ").strip()
+        if opcao:
+            if opcao == '1':
+                if not agenda:
+                    os.system('cls')
+                    print(f'\n{"-"*60}')
+                    print(Fore.RED+"Não há contatos!"+Fore.RESET)
+                    print(f'{"-"*60}\n')
+                    break
+                else:
+                    while True:
+                        os.system('cls')
+                        print(f'\n{"-"*60}\n{"CONTATOS":^60}\n{"-"*60}') # ! contatos disponíveis
+                        for id,contato in agenda.items():
+                            print(f"ID: {id} → {contato['nome']}")
+                        id = input("\nInsira o ID do contato para excluir\n→ ")
+                        if id:
+                            if id in agenda.keys():
+                                os.system('cls')
+                                while True:
+                                    resp = input(Fore.RED+'\nRealmente deseja excluir'+Fore.RESET+f' {agenda[id]["nome"]} '+Fore.RED+ 'da agenda?\n→ '+Fore.RESET).strip()
+                                    if resp:
+                                        if resp[0] in 'Ss':
 
-def pesquisar(agenda):
+                                            list_keys = list(agenda.keys())
+
+                                            if id != list_keys[-1]:
+                                                agenda.pop(id) #! se a chave for difente do último id, apaga o id e reescreve os ids 
+                                                #! seguintes ao que foi excluido (apenas as chaves) e conserva os valores
+                                                novo_agenda = {}    
+                                                for key, value in agenda.items():
+                                                    if int(key) > int(id):
+                                                        novo_agenda[str(int(key)-1)] = value
+                                                    else:
+                                                        novo_agenda[key] = value
+                                                with open(agenda_json,'w', encoding='utf-8') as arquivo:
+                                                    json.dump(novo_agenda,arquivo,indent=4)
+                                            else:
+                                                agenda.pop(id)
+                                                with open(agenda_json,'w', encoding='utf-8') as arquivo:
+                                                    json.dump(agenda,arquivo,indent=4)
+                                            print('\nExcluindo...\n')
+                                            sleep(2)
+                                            print(Fore.GREEN+"\nContato excluido com sucesso!"+Fore.RESET)
+                                            sleep(2)
+                                            break
+                                        elif resp[0] in 'Nn':
+                                            break
+                                        else:
+                                            print('\nSim ou Não?\n')
+                                    else:
+                                        print('\nInsira um valor válido\n')
+                                break
+                            else:
+                                print(Fore.RED+"\nEsse contato não existe!\n"+Fore.RESET)
+                                sleep(3)
+                        else:
+                            print('\nInsira um valor válido!\n')
+                            sleep(3)
+            else:
+                break  
+        else:
+            print('\nInsira um caracter válido!\n')          
+
+    print(f'{"-"*60}\n{"- "*30}')
+    return ""
+
+def pesquisar(agenda, agenda_json):
     print("\n---CONTATOS---")
     for cont in agenda.keys():
         print(cont)
@@ -263,12 +333,12 @@ def pesquisar(agenda):
         else:
             print("Esse contato não existe")
     
-def ordem_adcionado(agenda):
+def ordem_adcionado(agenda, agenda_json):
     print("\n---ORDEM DE ADICIONADOS---")
     for k, v in (agenda.items()):
         print(f'{k} --> {v}')
 
-def ordem_abc(agenda):
+def ordem_abc(agenda, agenda_json):
     abc = []
     for contato in agenda.keys():
         abc.append(contato)

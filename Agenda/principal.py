@@ -21,13 +21,6 @@ while True:
     os.system("cls")
     if opcao == '1':
         id_contato = str(1+int(list(agenda.keys())[-1])) if len(agenda) != 0 else '1'
-        # id_contato = 0
-        # if not agenda.keys(): # definir o valor do id
-        #     id_contato = 0
-        # else:
-        #     for id in agenda.keys():
-        #         id_contato = int(id)
-        # id_contato += 1
 
         print(cadastro(agenda, id_contato, agenda_json))
         print("Aperte uma tecla para retornar...")
@@ -55,7 +48,9 @@ while True:
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '0':
+        print(f'{"-"*60}\n{"- "*30}')
         print("\n\nFim do programa!\n\n")
+        print(f'{"- "*30}\n{"-"*60}')
         break
     else:
         print("\nResponda de acordo com as opções: 1 ao 6, ou 0\n")
