@@ -321,6 +321,93 @@ def excluir(agenda,agenda_json):
     return ""
 
 def pesquisar(agenda, agenda_json):
+    while True:
+        os.system('cls')
+        print(f"\n{'- '*30}")
+        print(f'{"-"*60}\n{"PESQUISAR":^60}\n{"-"*60}')
+        print('''
+1 - Pesquisar por ID.
+2 - Pesquisar por NOME.
+0 - Sair (ou qualquer tecla).''')
+        opcao = input("\n→ ").strip()
+        if opcao:
+            if opcao == '1':
+                if not agenda:
+                    os.system('cls')
+                    print(f'\n{"-"*60}')
+                    print(Fore.RED+"Não há contatos para pesquisar!"+Fore.RESET)
+                    print(f'{"-"*60}\n')
+                    break
+                else:
+                    while True:
+                        os.system('cls')
+                        print(f'\n{"-"*60}\n{"CONTATOS":^60}\n{"-"*60}') # ! contatos disponíveis
+                        for i,contato in agenda.items():
+                            print(f"ID: {i} → {contato['nome']}")
+                        id = input("\nInsira o ID do contato para pesquisar\n→ ").strip()
+                        if id:
+                            if id in agenda.keys():
+                                for k, v in agenda.items():
+                                    if k==id:
+                                        print(f'\n{"-"*60}\n{"CONTATO":^60}\n{"-"*60}')
+                                        print(f"Id → {k}\nNome → {v['nome']}\nEndereço → {v['endereço']}")
+                                        for tel in range(len(v['telefone'])):
+                                            print(f"Telefone {tel} → {v['telefone'][tel]}")
+                                print('-'*60)
+                                print("Aperte uma tecla para retornar...")
+                                input()
+                                break
+                            else:
+                                print(Fore.RED+"\nEsse contato não existe!\n"+Fore.RESET)
+                                sleep(3)
+                        else:
+                            print('\nInsira um valor válido!\n')
+                            sleep(3)
+            elif opcao == '2':
+                if not agenda:
+                    os.system('cls')
+                    print(f'\n{"-"*60}')
+                    print(Fore.RED+"Não há contatos para pesquisar!"+Fore.RESET)
+                    print(f'{"-"*60}\n')
+                    break
+                else:
+                    while True:
+                        os.system('cls')
+                        print(f'\n{"-"*60}\n{"CONTATOS":^60}\n{"-"*60}') # ! contatos disponíveis
+                        for id,contato in agenda.items():
+                            print(f"ID: {id} → {contato['nome']}")
+                        nome = input("\nInsira o nome do contato para pesquisar\n→ ").strip().capitalize()
+                        if nome:
+                            nomes_agenda = []
+                            for value in agenda.values():
+                                nomes_agenda.append(value['nome'])
+                            if nome in nomes_agenda:
+                                os.system('cls')
+                                for k, v in agenda.items():
+                                    if v['nome'] == nome:
+                                        print(f'\n{"-"*60}\n{"CONTATO":^60}\n{"-"*60}')
+                                        print(f"Id → {k}\nNome → {v['nome']}\nEndereço → {v['endereço']}")
+                                        for tel in range(len(v['telefone'])):
+                                            print(f"Telefone {tel} → {v['telefone'][tel]}")
+                                print('-'*60)
+                                print("Aperte uma tecla para retornar...")
+                                input()
+                                break
+                            else:
+                                print(Fore.RED+"\nEsse contato não existe!\n"+Fore.RESET)
+                                sleep(3)
+                        else:
+                            print('\nInsira um valor válido!\n')
+                            sleep(3)
+            else:
+                break  
+        else:
+            print('\nInsira um caracter válido!\n')          
+
+    print(f'{"-"*60}\n{"- "*30}')
+    return ""  
+
+
     print("\n---CONTATOS---")
     for cont in agenda.keys():
         print(cont)

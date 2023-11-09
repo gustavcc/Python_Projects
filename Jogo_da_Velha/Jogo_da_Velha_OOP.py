@@ -4,7 +4,7 @@ class Tabuleiro:
         self.tabuleiro = [" "] * 9
 
     def mostrar_tabuleiro(self):
-        print(f" {self.tabuleiro[0]} | {self.tabuleiro[1]} | {self.tabuleiro[2]} ")
+        print(f" {self.tabuleiro[0]} | {self.tabuleiro[1]} | {self.tabuleiro[2]} " )
         print("---+---+---")
         print(f" {self.tabuleiro[3]} | {self.tabuleiro[4]} | {self.tabuleiro[5]} ")
         print("---+---+---")

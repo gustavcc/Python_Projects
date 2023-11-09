@@ -1,6 +1,5 @@
 ----------------------------------------------------------
 Agenda:
-    excluir
     pesquisar
     ordem de adicionado primeiro
     ordem alfabetica
