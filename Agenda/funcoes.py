@@ -3,7 +3,6 @@ import os
 from colorama import Fore
 from time import sleep
 
-# aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 # agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Projetos_Python/Agenda/agenda.json'
 
 def contem_letras(valor):
