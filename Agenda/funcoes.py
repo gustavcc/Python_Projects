@@ -88,7 +88,8 @@ def cadastro(agenda, id_contato, agenda_json):
                 agenda[id_contato] = {'nome': nome, 'endereço': endereco, 'telefone': lista_telefone}
                 with open(agenda_json,'w', encoding='utf8') as arquivo:
                     json.dump(agenda,arquivo,indent=4)
-                print("\nContato cadastrado com sucesso!\n")
+                print("\nContato cadastrado com sucesso...\n")
+                sleep(3)
             elif opcao=='0':
                 break
             else:
