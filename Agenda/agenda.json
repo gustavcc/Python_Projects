@@ -3,28 +3,22 @@
         "nome": "Gustavo",
         "endere\u00e7o": "Bjl",
         "telefone": [
-            "(00)0000-0000"
+            "(44)4444-4444"
         ]
     },
     "2": {
-        "nome": "Rita",
+        "nome": "Ana",
         "endere\u00e7o": "Bjl",
         "telefone": [
-            "(11)1111-1211"
+            "(00)0000-0000",
+            "(99)9999-9999"
         ]
     },
     "3": {
-        "nome": "Deri",
-        "endere\u00e7o": "Projeto",
+        "nome": "Stefanny",
+        "endere\u00e7o": "Bjl",
         "telefone": [
-            "(88)8888-8888"
-        ]
-    },
-    "4": {
-        "nome": "Ana",
-        "endere\u00e7o": "33",
-        "telefone": [
-            "(99)9999-9999"
+            "(33)3333-3333"
         ]
     }
 }

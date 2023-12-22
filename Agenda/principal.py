@@ -20,13 +20,14 @@ while True:
     opcao = menu()
     os.system("cls")
     if opcao == '1':
+        
         id_contato = str(1+int(list(agenda.keys())[-1])) if len(agenda) != 0 else '1'
 
-        print(cadastro(agenda, id_contato, agenda_json))
+        cadastro(agenda, id_contato, agenda_json)
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '2':
-        print(editar(agenda,agenda_json))
+        editar(agenda,agenda_json)
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '3':
@@ -34,19 +35,20 @@ while True:
         print("Aperte uma tecla para retornar...")
         input()
     elif opcao == '4':
-        print(pesquisar(agenda,agenda_json))
+        pesquisar(agenda)
         print("Aperte uma tecla para retornar...")
         input()
+        
     elif opcao == '5':
-        print(ordem_adcionado(agenda,agenda_json))
+        ordem_adcionado(agenda)
         print("Aperte uma tecla para retornar...")
         input()
+        
     elif opcao == '6':
-        print("\n---ORDEM ALFABÉTICA---")
-        for key in (ordem_abc(agenda,agenda_json)):
-            print(key)
+        ordem_abc(agenda)
         print("Aperte uma tecla para retornar...")
         input()
+        
     elif opcao == '0':
         print(f'{"-"*60}\n{"- "*30}')
         print("\n\nFim do programa!\n\n")

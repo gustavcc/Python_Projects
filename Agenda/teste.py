@@ -1,42 +1,6 @@
-dicionario = {
-    '1':{
-        'nome': 'gustavo',
-        'idade': 17
-    },
-    '2':{
-        'nome': 'stefany',
-        'idade': 17
-    },
-    '3':{
-        'nome': 'rita',
-        'idade': 17
-    },
-    '4':{
-        'nome': 'gilberto',
-        'idade': 17
-    }
-}
+meu_dicionario = {1: 'Zeca', 2: 'Maria', 3: 'Ana', 4: 'Carlos'}
 
-id = '4'
+# Ordena o dicionário pelos valores (nomes) em ordem alfabética
+dicionario_ordenado = {k: v for k, v in sorted(meu_dicionario.items(), key=lambda item: item[1])}
 
-print('--------------------------------------')
-
-list_keys = list(dicionario.keys())
-print(list_keys)
-
-if id != list_keys[-1]:
-    dicionario.pop(id)
-    novo_dicionario = {}    
-    for key, value in dicionario.items():
-        if int(key) >= int(id):
-            novo_dicionario[str(int(key)-1)] = value
-        else:
-            novo_dicionario[key] = value
-    print('--------------------------------------')
-    print(novo_dicionario)
-    print('--------------------------------------')
-else:
-    dicionario.pop(id)
-    print('--------------------------------------')
-    print(dicionario)
-    print('--------------------------------------')
+print(dicionario_ordenado)
