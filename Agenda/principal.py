@@ -4,7 +4,7 @@ import os
 
 while True:
 
-    agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Python_Projects/Agenda/agenda.json'
+    agenda_json = 'C:/Users/ritac/OneDrive/Documentos/GitHub/Python_Projects™/Agenda/agenda.json'
 
     if not os.path.isfile(agenda_json):
         # Se o arquivo não existe, crie-o
