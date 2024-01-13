@@ -14,17 +14,3 @@ def ConnectionDB():
 
 vConnection=ConnectionDB()
 
-
-def deletar(connection,sql):
-    try:
-        c = connection.cursor()
-        c.execute(sql)
-        connection.commit()
-    except Error as er:
-        print('Erro: ',er)
-    finally: # acontece se o try der certo
-        print('Registro deletado')
-
-vsql = '''DELETE FROM Contatos WHERE id_contato=2'''
-
-deletar(vConnection,vsql)
