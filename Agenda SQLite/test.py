@@ -4,18 +4,23 @@ from sqlite3 import Error
 from colorama import Fore
 from time import sleep
 
-def ContemEspecial(string):
-    for letter in string:
-        print(letter)
-        if letter in ['!','@','.','#','%','*','&',';']:
-            sleep(1)
+def contem_especial(valor):
+    especial = ['!','@','.','#','%','*','&',';']
+    for letter in valor:
+        if letter in especial:
             return True
-        else: return False
-        
+    return False
+
+def contem_letras(valor):
+    for caractere in valor:
+        if "a" <= caractere <= "z" or "A" <= caractere <= "Z":
+            return True
+    return False
+
 while True:
-                    telefone = input(f'\nInsira o telefone de\nex: (00)0000 0000\n→ ')
-                    if not ContemEspecial(telefone) and len(telefone)==13 and telefone[0]=='(' and telefone[3]==')' and telefone[8]==" ":
-                        break
-                    else:
-                        print(Fore.RED+'\nInsira um telefone válido!\n'+Fore.RESET)
-                        sleep(2)
+    telefone = input(f'\nInsira o telefone de\nex: (00)0000 0000\n→ ')
+    if contem_especial(telefone) or len(telefone)!=13 or telefone[0]!='(' or telefone[3]!=')' or telefone[8]!=" ":
+        print(Fore.RED+'\nInsira um telefone válido!\n'+Fore.RESET)
+        sleep(2)
+    else: 
+        break
