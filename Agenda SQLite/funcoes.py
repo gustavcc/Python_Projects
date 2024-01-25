@@ -283,7 +283,8 @@ def Excluir(connection):
                             resp = input(Fore.RED+f"\nRealmente deseja exlcluir esse contato? (s/n)\n→ "+Fore.RESET)
                             if resp:
                                 if resp=='s' or resp[0]=='s':
-                                    vSQL = f'''DELETE FROM Contatos WHERE id_contato="{id_contato}"'''
+                                    vSQL = f'''DELETE FROM Contatos WHERE id_contato="{id_contato}";
+'''
                                     CommitDB(connection,vSQL)
                                     print(f"\n{'-'*30}")
                                     print(Fore.GREEN+f"Contato excluido com sucesso!"+Fore.RESET)
