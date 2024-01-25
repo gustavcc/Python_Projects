@@ -1,4 +1,4 @@
-from funcoes import BuscarDB
+from funcoes import BuscarDB, CommitDB
 import sqlite3
 from sqlite3 import Error
 from colorama import Fore
@@ -17,10 +17,20 @@ def contem_letras(valor):
             return True
     return False
 
-while True:
-    telefone = input(f'\nInsira o telefone de\nex: (00)0000 0000\n→ ')
-    if contem_especial(telefone) or len(telefone)!=13 or telefone[0]!='(' or telefone[3]!=')' or telefone[8]!=" ":
-        print(Fore.RED+'\nInsira um telefone válido!\n'+Fore.RESET)
-        sleep(2)
-    else: 
-        break
+def ConnectionDB():
+    path = "Agenda.db"
+    c = None
+    try:
+        c=sqlite3.connect(path)
+    except Error as er:
+        print(Fore.RED+'Erro: ',er+Fore.RESET)
+    return c
+
+vConnection=ConnectionDB()
+
+nome = 'Stefanny'
+email = "stefanny@gmail.com"
+id = 7
+vSQL = f"UPDATE Contatos SET nome='{nome}', email='{email}' WHERE id_contato='{id}'"
+
+CommitDB(vConnection,vSQL)

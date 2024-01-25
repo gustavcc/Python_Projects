@@ -53,17 +53,24 @@ def Cadastro(connection):
         os.system('cls')
         print(f"{'-'*30}\n{'- '*15}\n{'Cadastro':^30}\n{'- '*15}\n{'-'*30}")
         option = input('''
-1 - Cadastrar contato
-0 - Voltar ao Menu
-\n→ ''')
+ 1 - Cadastrar contato
+ 0 - Voltar ao Menu
+ \n→ ''')
         if option:
             if option=='1':
                 while True:
                     os.system('cls')
                     print(f"\n{'-'*30}")   
-                    nome = input(f'\nInsira o nome\n→ ').capitalize().strip()
+                    while True:
+                        nome = input('\nInsira o nome\n→ ').capitalize().strip()
+                        if nome:
+                            break
+                        else:
+                            print(Fore.RED+'\nInsira um nome válido!\n'+Fore.RESET)
+                            sleep(2)
                     vSQL = '''SELECT * FROM Contatos'''
                     contatos = BuscarDB(connection,vSQL)
+                    resp = 'n'
                     for contato in contatos:
                         if contato[1]==nome:
                             print(Fore.BLUE+f'\n{nome} é um nome já existente!\n'+Fore.RESET)
@@ -116,12 +123,114 @@ def Cadastro(connection):
 def Editar(connection):
     while True:
         os.system('cls')
-        
-    
-    
-    
+        print(f"{'-'*30}\n{'- '*15}\n{'Editar':^30}\n{'- '*15}\n{'-'*30}")
+        option = input('''
+ 1 - Editar contato
+ 0 - Voltar ao Menu
+ \n→ ''')
+        if option:
+            if option=='1':
+                vSQL = '''SELECT * FROM Contatos'''
+                contatos = BuscarDB(connection,vSQL)
+                if contatos:
+                    while True:
+                        nome_edit = input(Fore.BLUE+'\nInsira o nome do contato que deseja editar\n→ '+Fore.RESET).capitalize().strip()
+                        if nome_edit:
+                            vSQL = f'''SELECT * FROM Contatos WHERE nome="{nome_edit}"'''
+                            contatos = BuscarDB(connection,vSQL)
+                            have = False
+                            for cont in contatos:
+                                if cont[1]==nome_edit:   
+                                    have = True
+                                    os.system('cls')
+                                    print(f"\n{'-'*30}")
+                                    print(f"{'Contatos':^30}")
+                                    print('-'*30)
+                                    for contato in contatos:
+                                        print(f"\nID______ → {contato[0]}\nNome____ → {contato[1]}\nTelefone → {contato[2]}\nEmail___ → {contato[3]}")
+                                    break
+                            if have:
+                                while True:
+                                    try:
+                                        id_edit = int(input(Fore.BLUE+f"\nInsira o ID do contato que deseja excluir\n→ "+Fore.RESET))
+                                        vSQL = f'''SELECT * FROM Contatos'''
+                                        contatos = BuscarDB(connection,vSQL)
+                                        for id_e in contatos:
+                                            if id_e[0]==id_edit:
+                                                break
+                                        if id_e[0]==id_edit:
+                                            break
+                                        else:
+                                            print(Fore.RED+'\nEsse ID não existe!'+Fore.RESET)
+                                            print('-'*30)
+                                            print('Aperte "ENTER" para continuar...')
+                                            input()
+                                    except ValueError:
+                                        print(Fore.RED+'\nInsira uma opção válida!\n'+Fore.RESET)
+                                        print('-'*30)
+                                        print('Aperte "ENTER" para continuar...')
+                                        input()
+                                os.system('cls')
+                                while True:
+                                    new_nome = input(Fore.BLUE+'\nNovo nome\n→ '+Fore.RESET).capitalize().strip()
+                                    if new_nome:
+                                        break
+                                    else:
+                                        print(Fore.RED+'\nInsira um nome válido!\n'+Fore.RESET)
+                                        sleep(2)
+                                while True:
+                                    new_telefone = input(Fore.BLUE+'\nNovo telefone\n→ '+Fore.RESET).capitalize().strip()
+                                    if not new_telefone or contem_especial(new_telefone) or len(new_telefone)!=13 or new_telefone[0]!='(' or new_telefone[3]!=')' or new_telefone[8]!=" ":
+                                        print(Fore.RED+'\nInsira um telefone válido!\n'+Fore.RESET)
+                                        sleep(2) 
+                                    else: break
+                                while True:
+                                    new_email = input(Fore.BLUE+f'\nNovo email\nex: exemplo@agenda.com\n→ '+Fore.RESET)
+                                    if '@' in new_email and '.com' in new_email:
+                                        break
+                                    else:
+                                        print(Fore.RED+'\nInsira um email válido!\n')
+                                        sleep(2)
+                                vSQL = f"UPDATE Contatos SET nome='{new_nome}', telefone='{new_telefone}', email='{new_email}' WHERE id_contato='{id_edit}'"
+                                try:
+                                    CommitDB(connection,vSQL)
+                                    print(Fore.GREEN+f'\nContato editado com sucesso!\n'+Fore.RESET)
+                                    print('-'*30)
+                                    print('Aperte "ENTER" para continuar...')
+                                    input()
+                                except Error as er:
+                                    print(Fore.RED+f'\nErro de conexão... O contato não foi editado!\nErro:{er}'+Fore.RESET)
+                                    sleep(2)
+                                finally:
+                                    break
+                            else:
+                                print(Fore.RED+f"\n{nome_edit} não existe na base de dados!\n"+Fore.RESET)
+                                print('-'*30)
+                                print('Aperte "ENTER" para continuar...')
+                                input()
+                        else:
+                            print(Fore.RED+'\nEsse contato não existe!\n'+Fore.RESET)
+                            print('-'*30)
+                            print('Aperte "ENTER" para continuar...')
+                            input()
+                    continue
+                else:
+                    print(Fore.RED+'\nNão existe nenhum contato cadastrado\n'+Fore.RESET)
+                    break
+            if option=='0':
+                break
+            else:
+                print(Fore.RED+'\nInsira uma opção válida 11111!\n'+Fore.RESET)
+                print('-'*30)
+                print('Aperte "ENTER" para continuar...')
+                input()
+        else:
+            print(Fore.RED+'\nInsira uma opção válida 22222!'+Fore.RESET)
+            print('-'*30)
+            print('Aperte "ENTER" para continuar...')
+            input()
     print('-'*30)
-    print('Aperte qualquer tecla para voltar...\n')
+    print('Aperte "ENTER" para voltar...')
     input()
 
 def Excluir(connection):
@@ -129,9 +238,9 @@ def Excluir(connection):
         os.system('cls')
         print(f"{'-'*30}\n{'- '*15}\n{'Excluir':^30}\n{'- '*15}\n{'-'*30}")
         option = input('''
-1 - Excluir contato
-0 - Voltar ao Menu
-\n→ ''')
+ 1 - Excluir contato
+ 0 - Voltar ao Menu
+ \n→ ''')
         if option:
             if option=='1':
                 os.system('cls')
@@ -152,6 +261,7 @@ def Excluir(connection):
                             break
                         else:
                             print(Fore.RED+f"\n{nome} não existe na base de dados!\n"+Fore.RESET)
+                            sleep(2)
                     if have:
                         while True:
                             try:
@@ -173,7 +283,7 @@ def Excluir(connection):
                             resp = input(Fore.RED+f"\nRealmente deseja exlcluir esse contato? (s/n)\n→ "+Fore.RESET)
                             if resp:
                                 if resp=='s' or resp[0]=='s':
-                                    vSQL = f'''DELETE FROM Contatos  WHERE id_contato="{id_contato}"'''
+                                    vSQL = f'''DELETE FROM Contatos WHERE id_contato="{id_contato}"'''
                                     CommitDB(connection,vSQL)
                                     print(f"\n{'-'*30}")
                                     print(Fore.GREEN+f"Contato excluido com sucesso!"+Fore.RESET)
