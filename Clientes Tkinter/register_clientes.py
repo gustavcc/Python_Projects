@@ -6,12 +6,12 @@ import pandas as pd
 def Connection():
     path = "clientes.db"
     c = None
-    # try:
-    c = sqlite3.connect(path)
-    # except Error as er:
-    #     print("\nErro: ",er)
-    # finally:
-    return c
+    try:
+        c = sqlite3.connect(path)
+    except Error as er:
+        print("\nErro: ",er)
+    finally:
+        return c
 
 # função que define a criação do DB e da tabela
 # def CriarTabela():

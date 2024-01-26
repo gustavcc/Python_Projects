@@ -58,34 +58,19 @@ def Cadastro(connection):
  \n→ ''')
         if option:
             if option=='1':
+                os.system('cls')
+                print(f"\n{'-'*30}")   
                 while True:
-                    os.system('cls')
-                    print(f"\n{'-'*30}")   
-                    while True:
-                        nome = input('\nInsira o nome\n→ ').capitalize().strip()
-                        if nome:
-                            break
-                        else:
-                            print(Fore.RED+'\nInsira um nome válido!\n'+Fore.RESET)
-                            sleep(2)
-                    vSQL = '''SELECT * FROM Contatos'''
-                    contatos = BuscarDB(connection,vSQL)
-                    resp = 'n'
-                    for contato in contatos:
-                        if contato[1]==nome:
-                            print(Fore.BLUE+f'\n{nome} é um nome já existente!\n'+Fore.RESET)
-                            resp = input('Deseja alterá-lo? (s/n)\n→ ').lower().strip()
-                            break
-                        else:
-                            resp='n'
-                            break
-                    if resp=='s' or resp[0]=='s':
-                        continue
-                    else: break
+                    nome = input('\nInsira o nome\n→ ').capitalize().strip()
+                    if nome:
+                        break
+                    else:
+                        print(Fore.RED+'\nInsira um nome válido!'+Fore.RESET)
+                        sleep(2)
                 while True:
                     telefone = input(f'\nInsira o telefone de {nome}\nex: (00)0000 0000\n→ ')
                     if contem_especial(telefone) or len(telefone)!=13 or telefone[0]!='(' or telefone[3]!=')' or telefone[8]!=" ":
-                        print(Fore.RED+'\nInsira um telefone válido!\n'+Fore.RESET)
+                        print(Fore.RED+'\nInsira um telefone válido!'+Fore.RESET)
                         sleep(2)
                     else: break
                 while True:
@@ -93,9 +78,8 @@ def Cadastro(connection):
                     if '@' in email and '.com' in email:
                         break
                     else:
-                        print(Fore.RED+'\nInsira um email válido!\n')
-                        sleep(2)
-                
+                        print(Fore.RED+'\nInsira um email válido!')
+                        sleep(2)                
                 vSQL = f'''INSERT INTO Contatos (nome,telefone,email)
                             VALUES('{nome}','{telefone}','{email}')'''
                 try:
@@ -106,18 +90,24 @@ def Cadastro(connection):
                     input()
                 except:
                     print(Fore.RED+'\nErro de conexão... O contato não foi cadastrado!\n'+Fore.RESET)
-                    sleep(2)
+                    print('-'*30)
+                    print('Aperte "ENTER" para voltar...')
+                    input()
                 continue
             elif option=='0':
                 break
             else: 
                 print(Fore.RED+'\nInsira uma opção válida!\n'+Fore.RESET)
-                sleep(2)
+                print('Aperte "ENTER" para voltar...')
+                print('-'*30)
+                input()
         else:
             print(Fore.RED+'\nInsira uma opção válida!\n'+Fore.RESET)
-            sleep(2)
+            print('Aperte "ENTER" para voltar...')
+            print('-'*30)
+            input()
     print('-'*30)
-    print('Aperte "ENTER" para voltar...\n')
+    print('\nAperte "ENTER" para voltar...')
     input()
 
 def Editar(connection):
@@ -220,12 +210,12 @@ def Editar(connection):
             if option=='0':
                 break
             else:
-                print(Fore.RED+'\nInsira uma opção válida 11111!\n'+Fore.RESET)
+                print(Fore.RED+'\nInsira uma opção válida!\n'+Fore.RESET)
                 print('-'*30)
                 print('Aperte "ENTER" para continuar...')
                 input()
         else:
-            print(Fore.RED+'\nInsira uma opção válida 22222!'+Fore.RESET)
+            print(Fore.RED+'\nInsira uma opção válida!'+Fore.RESET)
             print('-'*30)
             print('Aperte "ENTER" para continuar...')
             input()
@@ -319,6 +309,79 @@ def Excluir(connection):
     input()
 
 def Mostrar(connection):
-    os.system('cls')
+    while True:
+        os.system('cls')
+        os.system('cls')
+        print(f"{'-'*30}\n{'- '*15}\n{'Pesquisar':^30}\n{'- '*15}\n{'-'*30}")
+        option = input('''
+ 1 - Todos os contatos
+ 2 - Por nome
+ 0 - Voltar ao Menu
+ \n→ ''')
+        if option:
+            vSQl = "SELECT * FROM Contatos"
+            contatos = BuscarDB(connection, vSQl)
+            if contatos:
+                if option=='1':
+                    os.system('cls')
+                    print('-'*52)
+                    print('|'+f'{"Contatos":^50}'+'|')
+                    print('-'*52)
+                    vSQl = "SELECT * FROM Contatos"
+                    contatos = BuscarDB(connection, vSQl)
+                    for contato in contatos:
+                        print('|'+f'{f"ID → {contato[0]}":^50}'+'|')
+                        print('|'+f'{f"Nome → {contato[1]}":^50}'+'|')
+                        print('|'+f'{f"Telefone → {contato[2]}":^50}'+'|')
+                        print('|'+f'{f"Email → {contato[3]}":^50}'+'|')
+                        print('-'*52)
+                    print('\nAperte "ENTER" para voltar...')
+                    input()
+                elif option=='2':
+                    while True:
+                        nome = input('\nInsira o nome da pessoa\n→ ').capitalize().strip()
+                        if nome:
+                            break
+                        else:
+                            print(Fore.RED+'\nInsira um nome válido!\n'+Fore.RESET)
+                            print('-'*30)
+                            print('Aperte "ENTER" para continuar...')
+                            input()
+                            vSQl = "SELECT * FROM Contatos"
+                    contatos = BuscarDB(connection, vSQl)
+                    have = False
+                    for contato in contatos:
+                        if contato[1]==nome:
+                            have=True
+                    if have:
+                        os.system('cls')
+                        print('-'*52)
+                        print('|'+f'{"Contatos":^50}'+'|')
+                        print('-'*52)
+                        for contato in contatos:
+                            if contato[1]==nome:
+                                print('|'+f'{f"ID → {contato[0]}":^50}'+'|')
+                                print('|'+f'{f"Nome → {contato[1]}":^50}'+'|')
+                                print('|'+f'{f"Telefone → {contato[2]}":^50}'+'|')
+                                print('|'+f'{f"Email → {contato[3]}":^50}'+'|')
+                                print('-'*52)
+                        print('\nAperte "ENTER" para voltar...')
+                        input()
+                    else:
+                        print(Fore.RED+'\nEsse nome não está cadastrado!\n'+Fore.RESET)
+                        print('-'*30)
+                        print('Aperte "ENTER" para continuar...')
+                        input()
+                else:
+                    break
+            else:
+                print(Fore.RED+'\nNão existe nenhum contato cadastrado\n'+Fore.RESET)
+                break
+        else:
+            print(Fore.RED+'\nInsira uma opção válida!'+Fore.RESET)
+            print('-'*30)
+            print('Aperte "ENTER" para continuar...')
+            input()
+    print('-'*30)
     print('Aperte qualquer tecla para voltar...')
     input()

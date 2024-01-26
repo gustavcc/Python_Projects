@@ -33,7 +33,7 @@ while True:
         os.system('cls')
         print(f"{'-'*30}\n")
         print('Fechando agenda...')
-        sleep(2)
+        sleep(1)
         print(Fore.RED+'Fim do programa.'+Fore.RESET)
         print(f"\n{'-'*30}")
         break
