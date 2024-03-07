@@ -24,7 +24,7 @@ def Connection():
 #                         sobrenome TEXT,
 #                         telefone TEXT,
 #                         email TEXT
-#  );'''
+# );'''
 #         c = connection.cursor()
 #         c.execute(vsql)
 #         connection.commit()
