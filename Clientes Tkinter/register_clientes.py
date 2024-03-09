@@ -2,7 +2,6 @@ import tkinter as tk
 import sqlite3
 from sqlite3 import Error
 import pandas as pd
-import openpyxl
 
 def Connection():
     path = "clientes.db"
@@ -72,10 +71,12 @@ def cadastrar_cliente():
             aviso1 = tk.Label(cadastrado, text='Cliente cadastrado!', foreground='green')
             aviso1.grid(row=0, column=0, padx=20, pady=20)
             print("\nCliente castrado")
-            Entry_nome.delete(0, "end")
-            Entry_sobrenome.delete(0, "end")
-            Entry_email.delete(0, "end")
-            Entry_telefone.delete(0, "end")
+            
+            #* resetar inputs 
+            # Entry_nome.delete(0, "end")
+            # Entry_sobrenome.delete(0, "end")
+            # Entry_email.delete(0, "end")
+            # Entry_telefone.delete(0, "end")
     except Error as er:
         print("\nErro: ",er)
 
@@ -90,10 +91,11 @@ def exportar_cliente():
         clientes.to_excel('clientes.xlsx')
         connection.commit()
 
-        Entry_nome.delete(0, "end")
-        Entry_sobrenome.delete(0, "end")
-        Entry_email.delete(0, "end")
-        Entry_telefone.delete(0, "end")
+        #* resetar inputs 
+        # Entry_nome.delete(0, "end")
+        # Entry_sobrenome.delete(0, "end")
+        # Entry_email.delete(0, "end")
+        # Entry_telefone.delete(0, "end")
     except Error as er:
         print("\nErro: ",er)
 
